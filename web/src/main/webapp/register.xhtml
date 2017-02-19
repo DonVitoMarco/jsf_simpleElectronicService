@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/template.xhtml">
+
+    <ui:define name="content">
+
+        <p style="margin-top: 0; text-align: center; font-size: 2em;">REGISTER</p>
+        <f:view>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="email">Email: </h:outputLabel>
+                    <h:inputText type="text" id="email" value="#{registrationBean.registrationDto.email}"
+                                 required="true" requiredMessage="Please enter email"
+                                 validatorMessage="Invalid email format">
+                        <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                    </h:inputText>
+                    <h:message for="email"/>
+                    <h:outputLabel for="password">Password: </h:outputLabel>
+                    <h:inputText type="password" id="password" value="#{registrationBean.registrationDto.password}"
+                                 required="true" requiredMessage="Please enter password"
+                                 validatorMessage="Invalid password format">
+                        <f:validateLength for="password" minimum="5"/>
+                    </h:inputText>
+                    <h:message for="password"/>
+                </h:panelGrid>
+                <h:commandButton value="REGISTER" type="submit" action="#{registrationBean.sendRegisterData}"/>
+            </h:form>
+        </f:view>
+
+    </ui:define>
+</ui:composition>

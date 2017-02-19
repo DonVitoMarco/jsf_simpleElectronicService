@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+</h:head>
+<h:body>
+
+    <ui:debug hotkey="x"/>
+
+    <h:form>
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton action="#{navBean.goToState('home')}" value="Return" ajax="false"
+                                 icon="ui-icon-arrowreturnthick-1-w"/>
+            </f:facet>
+            <f:facet name="right">
+                <span class="ui-separator">
+                    <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                </span>
+                <p:commandButton action="#{loginBean.logout}" value="Logout" ajax="false"/>
+            </f:facet>
+        </p:toolbar>
+    </h:form>
+
+
+    <h:form id="form">
+        <p:growl id="msgs" showDetail="true"/>
+        <p:dataTable var="d" value="#{devicesBean.selectedDevice.repairs}">
+            <f:facet name="header">
+                List Repairs
+            </f:facet>
+
+            <p:column headerText="ID">
+                <h:outputText value="#{d.idrepairs}"/>
+            </p:column>
+            <p:column sortBy="#{d.date}" headerText="DATE">
+                <h:outputText value="#{d.date}"/>
+            </p:column>
+            <p:column headerText="DESCRIPTION">
+                <h:outputText value="#{d.description}"/>
+            </p:column>
+            <p:column headerText="STATUS">
+                <h:outputText value="#{d.status.description}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+
+</h:body>
+</html>

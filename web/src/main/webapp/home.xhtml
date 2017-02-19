@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+    <ui:debug hotkey="x"/>
+
+    <h:form>
+        <p:toolbar>
+
+            <f:facet name="left">
+                <h:outputText value="USERNAME: #{loginBean.usernameFromSession}"/>
+            </f:facet>
+
+            <f:facet name="right">
+                <span class="ui-separator">
+                    <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                </span>
+                <p:commandButton action="#{loginBean.logout}" value="Logout" ajax="false"/>
+            </f:facet>
+
+        </p:toolbar>
+    </h:form>
+
+    <p:layout>
+        <h:form id="deviceForm">
+
+            <p:layoutUnit position="center">
+                <p:dataGrid id="devices" var="device" value="#{devicesBean.userDevices}" columns="4" rows="12"
+                            layout="grid">
+                    <f:facet name="header">
+                        Your Devices
+                    </f:facet>
+                    <p:column>
+                        <p:panel header="id device: #{device.idDevice}" style="text-align: center;">
+                            <h:panelGrid columns="1" style="width: 100%">
+                                <f:facet name="header">
+                                    <p:graphicImage value="/resources/images/#{device.name}.jpg"
+                                                    style="max-width: 100%"/>
+                                </f:facet>
+                                <h:outputText value="#{device.name}"/>
+                                <p:commandLink action="#{navBean.goToState('details')}" ajax="false">
+                                    <f:setPropertyActionListener value="#{device}"
+                                                                 target="#{devicesBean.selectedDevice}"/>
+                                    <h:outputText value="details"/>
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:column>
+                </p:dataGrid>
+            </p:layoutUnit>
+        </h:form>
+        <p:layoutUnit position="east" resizable="false" style="min-width: 300px">
+            <p:messages id="messages" autoUpdate="true" showDetail="true" closable="true"/>
+
+            <h:form>
+                <p:panelGrid columns="1" style="width: 100%; text-align: center;">
+                    <h:outputText value="Add Repair"/>
+                    <p:inputText id="idDevice" value="#{devicesBean.addDevice}" required="true" placeholder="id"/>
+                    <p:inputTextarea rows="4" id="descDevice" value="#{devicesBean.descDevice}" autoResize="false"
+                                     required="true" placeholder="description"/>
+                    <p:commandButton value="Add" update=":deviceForm:devices" id="btnAddForm" process="@form"
+                                     actionListener="#{devicesBean.addDeviceToRepair}"/>
+                </p:panelGrid>
+            </h:form>
+        </p:layoutUnit>
+
+    </p:layout>
+
+
+</h:body>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+</h:head>
+<h:body>
+
+    <ui:debug hotkey="x"/>
+
+    <h:form>
+        <p:toolbar>
+            <f:facet name="left">
+                <h:outputText value="ADMIN: #{loginBean.usernameFromSession}"/>
+            </f:facet>
+            <f:facet name="right">
+                <span class="ui-separator">
+                    <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                </span>
+                <p:commandButton action="#{loginBean.logout}" value="Logout" ajax="false"/>
+            </f:facet>
+        </p:toolbar>
+    </h:form>
+
+    <h:form id="form">
+        <p:growl id="msgs" showDetail="true"/>
+        <p:dataTable var="repair" value="#{adminBean.allRepairs}" filteredValue="#{adminBean.filteredRepairs}"
+                     widgetVar="filteredTable" emptyMessage="No repairs found with given criteria" stickyHeader="true"
+                     editable="true">
+            <f:facet name="header">
+                <p:outputPanel>
+                    <h:outputText value="Search all fields: "/>
+                    <p:inputText id="globalFilter" onkeyup="PF('filteredTable').filter()" placeholder="Enter keyword"
+                                 style="width:150px"/>
+                </p:outputPanel>
+            </f:facet>
+
+            <p:ajax event="rowEdit" listener="#{adminBean.onRowEdit}" update=":form:msgs"/>
+            <p:ajax event="rowEditCancel" listener="#{adminBean.onRowCancel}" update=":form:msgs"/>
+
+            <p:column sortBy="#{repair.idrepairs}" headerText="ID" filterBy="#{repair.idrepairs}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{repair.idrepairs}"/>
+            </p:column>
+            <p:column sortBy="#{repair.date}" headerText="DATE" filterBy="#{repair.date}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{repair.date}"/>
+            </p:column>
+            <p:column sortBy="#{repair.device.name}" headerText="DEVICE" filterBy="#{repair.device.name}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{repair.device.name}"/>
+            </p:column>
+            <p:column sortBy="#{repair.description}" headerText="DESCRIPTION" filterBy="#{repair.description}"
+                      filterMatchMode="contains">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{repair.description}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{repair.description}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column sortBy="#{repair.status.description}" headerText="STATUS" filterBy="#{repair.status.description}"
+                      filterMatchMode="contains">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{repair.status.description}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{repair.status.description}"
+                                                       style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:32px">
+                <p:rowEditor/>
+            </p:column>
+        </p:dataTable>
+
+    </h:form>
+
+
+</h:body>
+</html>
+
