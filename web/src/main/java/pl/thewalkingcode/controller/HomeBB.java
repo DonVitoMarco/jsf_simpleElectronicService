@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 @SessionScoped
-@ManagedBean(name = "devicesBean")
-public class DevicesBB {
+@ManagedBean(name = "homeBean")
+public class HomeBB {
 
     @EJB
     private DeviceService deviceService;

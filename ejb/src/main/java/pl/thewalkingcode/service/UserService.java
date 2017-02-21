@@ -1,7 +1,9 @@
 package pl.thewalkingcode.service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import pl.thewalkingcode.dao.*;
 import pl.thewalkingcode.model.*;
+import pl.thewalkingcode.util.Resources;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -9,10 +11,14 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 
 @Stateless
 public class UserService implements Serializable {
+
+    @Inject
+    private Logger LOG;
 
     @Inject
     private UserDAO userDAO;
@@ -34,7 +40,7 @@ public class UserService implements Serializable {
         if (user == null) {
             return null;
         }
-        if (user.getPassword().equals(password)) {
+        if (BCrypt.checkpw(password, user.getPassword())) {
             return user;
         }
         return null;
@@ -51,7 +57,7 @@ public class UserService implements Serializable {
     public User create(String email, String password) {
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
 
         Role role = roleDAO.findRoleByName("user");
         if (role != null) {

@@ -25,7 +25,7 @@ public class RegistrationBB {
 
     private RegistrationDto registrationDto;
 
-    private static final String REG_COMPLTED = "Registration Completed! Now you can log in.";
+    private static final String REG_COMPLETED = "Registration Completed! Now you can log in.";
     private static final String USER_EXIST = "User already exist.";
     private static final String INTERNAL_ERROR = "Internal server error";
 
@@ -53,7 +53,7 @@ public class RegistrationBB {
         User user = userService.create(registrationDto.getEmail(), registrationDto.getPassword());
         if(user != null) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, REG_COMPLTED, null));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, REG_COMPLETED, null));
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, INTERNAL_ERROR, null));

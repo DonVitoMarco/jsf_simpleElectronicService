@@ -34,7 +34,7 @@
         <h:form id="deviceForm">
 
             <p:layoutUnit position="center">
-                <p:dataGrid id="devices" var="device" value="#{devicesBean.userDevices}" columns="4" rows="12"
+                <p:dataGrid id="devices" var="device" value="#{homeBean.userDevices}" columns="4" rows="12"
                             layout="grid">
                     <f:facet name="header">
                         Your Devices
@@ -49,7 +49,7 @@
                                 <h:outputText value="#{device.name}"/>
                                 <p:commandLink action="#{navBean.goToState('details')}" ajax="false">
                                     <f:setPropertyActionListener value="#{device}"
-                                                                 target="#{devicesBean.selectedDevice}"/>
+                                                                 target="#{homeBean.selectedDevice}"/>
                                     <h:outputText value="details"/>
                                 </p:commandLink>
                             </h:panelGrid>
@@ -64,11 +64,11 @@
             <h:form>
                 <p:panelGrid columns="1" style="width: 100%; text-align: center;">
                     <h:outputText value="Add Repair"/>
-                    <p:inputText id="idDevice" value="#{devicesBean.addDevice}" required="true" placeholder="id"/>
-                    <p:inputTextarea rows="4" id="descDevice" value="#{devicesBean.descDevice}" autoResize="false"
+                    <p:inputText id="idDevice" value="#{homeBean.addDevice}" required="true" placeholder="id"/>
+                    <p:inputTextarea rows="4" id="descDevice" value="#{homeBean.descDevice}" autoResize="false"
                                      required="true" placeholder="description"/>
                     <p:commandButton value="Add" update=":deviceForm:devices" id="btnAddForm" process="@form"
-                                     actionListener="#{devicesBean.addDeviceToRepair}"/>
+                                     actionListener="#{homeBean.addDeviceToRepair}"/>
                 </p:panelGrid>
             </h:form>
         </p:layoutUnit>
