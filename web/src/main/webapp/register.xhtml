@@ -21,11 +21,11 @@
                     </h:inputText>
                     <h:message for="email"/>
                     <h:outputLabel for="password">Password: </h:outputLabel>
-                    <h:inputText type="password" id="password" value="#{registrationBean.registrationDto.password}"
+                    <h:inputSecret type="password" id="password" value="#{registrationBean.registrationDto.password}"
                                  required="true" requiredMessage="Please enter password"
                                  validatorMessage="Invalid password format">
                         <f:validateLength for="password" minimum="5"/>
-                    </h:inputText>
+                    </h:inputSecret>
                     <h:message for="password"/>
                 </h:panelGrid>
                 <h:commandButton value="REGISTER" type="submit" action="#{registrationBean.sendRegisterData}"/>
